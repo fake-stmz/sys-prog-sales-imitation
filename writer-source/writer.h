@@ -7,21 +7,11 @@
 #include <pthread.h>
 #include <unistd.h>
 #include <time.h>
+#include "../structs/structs.h"
 
 #define OUTPUT_FILE "./data/sales.csv"
 #define CUSTOMERS_FILE "./data/customers.csv"
 #define ITEMS_FILE "./data/items.csv"
-
-typedef struct {
-    int id;
-    char* name;
-    double price;
-} Item;
-
-typedef struct {
-    int id;
-    char* name;
-} Customer;
 
 typedef struct {
     Item* items;

@@ -74,6 +74,8 @@ int main() {
 
     pthread_mutex_init(&sale_mutex, NULL);
 
+    srand(time(NULL));
+
     pthread_t threads[THREAD_COUNT];
     for (int i = 0; i < THREAD_COUNT; i++) {
         if (pthread_create(&threads[i], NULL, writer_thread, &args) != 0) {
