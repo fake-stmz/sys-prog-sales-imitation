@@ -8,9 +8,9 @@
 #include <unistd.h>
 #include <time.h>
 
-#define OUTPUT_FILE "data/sales.csv"
-#define CUSTOMERS_FILE "data/customers.csv"
-#define ITEMS_FILE "data/items.csv"
+#define OUTPUT_FILE "./data/sales.csv"
+#define CUSTOMERS_FILE "./data/customers.csv"
+#define ITEMS_FILE "./data/items.csv"
 
 typedef struct {
     int id;
@@ -28,9 +28,11 @@ typedef struct {
     Customer* customers;
 } WriterArgs;
 
-int writing_active = 1;
-int next_sale_id = 0;
+extern int writing_active;
+extern int next_sale_id;
 
 void* writer_thread(void* arg);
+
+extern pthread_mutex_t sale_mutex;
 
 #endif
