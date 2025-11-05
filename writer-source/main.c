@@ -56,7 +56,7 @@ int main() {
 
     writing_active = 1;
 
-    FILE* sales_file = fopen(OUTPUT_FILE, "r");
+    FILE* sales_file = fopen(SALES_FILE, "r");
     if (sales_file) {
         char line[256];
         fgets(line, sizeof(line), sales_file);

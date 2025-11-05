@@ -5,7 +5,7 @@ void* writer_thread(void* arg) {
     Item* items = args->items;
     Customer* customers = args->customers;
     
-    FILE* output_file = fopen(OUTPUT_FILE, "a");
+    FILE* output_file = fopen(SALES_FILE, "a");
     while (writing_active) {
         pthread_mutex_lock(&sale_mutex);
 
