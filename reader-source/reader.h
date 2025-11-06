@@ -21,6 +21,7 @@ extern pthread_rwlock_t sales_rwlock;
 extern pthread_mutex_t read_mutex;
 extern pthread_mutex_t sum_mutex;
 extern pthread_mutex_t top_mutex;
+extern pthread_mutex_t customers_mutex;
 
 typedef struct {
     int sales_count;
@@ -40,6 +41,11 @@ typedef struct {
     int count;
     int rank;
 } top_entry_t;
+
+typedef struct {
+    customer_t customer;
+    int total_spending;
+} customer_spending_t;
 
 void* read_sales_thread(void* arg);
 
