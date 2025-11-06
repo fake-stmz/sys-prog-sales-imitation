@@ -31,7 +31,7 @@ void read_sales() {
         line[strcspn(line, "\n")] = 0;
         
         sale_t sale;
-        if (sscanf(line, "%d,%19[^,],%d,%d,%d",
+        if (sscanf(line, "%d,%s,%d,%d,%d",
                    &sale.sale_id, sale.date_time, &sale.customer_id,
                    &sale.item_id, &sale.quantity) == 5) {
             
@@ -59,6 +59,7 @@ void read_sales() {
         if (temp != NULL) {
             sales = temp;
         }
+        report_data.sales_count = count;
     }
     pthread_rwlock_unlock(&sales_rwlock);
 }

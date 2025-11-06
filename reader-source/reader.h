@@ -19,6 +19,18 @@ extern sale_t* sales;
 extern volatile int working;
 extern pthread_rwlock_t sales_rwlock;
 extern pthread_mutex_t read_mutex;
+extern pthread_mutex_t sum_mutex;
+
+typedef struct {
+    int sales_count;
+    int sales_sum;
+    int profit;
+} report_data_t;
+
+extern report_data_t report_data;
+
+extern item_t items[12];    
+extern customer_t customers[4];
 
 void* read_sales_thread(void* arg);
 
