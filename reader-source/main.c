@@ -18,8 +18,15 @@ void init_report_data(report_data_t* report_data) {
     report_data->sales_count = 0;
     report_data->sales_sum = 0;
     report_data->profit = 0;
-    report_data->most_popular_items = NULL;
-    report_data->least_popular_items = NULL;
+    report_data->most_popular_items = malloc(5 * sizeof(top_entry_t));
+    report_data->least_popular_items = malloc(5 * sizeof(top_entry_t));
+    
+    if (report_data->most_popular_items) {
+        memset(report_data->most_popular_items, 0, 5 * sizeof(top_entry_t));
+    }
+    if (report_data->least_popular_items) {
+        memset(report_data->least_popular_items, 0, 5 * sizeof(top_entry_t));
+    }
 }
 
 int main() {
@@ -107,6 +114,10 @@ int main() {
     pthread_join(customer_thread, NULL);
     pthread_join(trend_thread, NULL);
     pthread_join(rep_thread, NULL);
+
+    if (report_data.most_popular_items) free(report_data.most_popular_items);
+    if (report_data.least_popular_items) free(report_data.least_popular_items);
+    if (sales) free(sales);
 
     return 0;
 }

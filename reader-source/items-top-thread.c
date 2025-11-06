@@ -16,7 +16,6 @@ void print_entries(top_entry_t* entries, FILE* to) {
 }
 
 void calculate_top() {
-
     init_entries();
 
     pthread_rwlock_rdlock(&sales_rwlock);
@@ -26,9 +25,6 @@ void calculate_top() {
     }
     
     pthread_rwlock_unlock(&sales_rwlock);
-
-    top_entry_t most_popular_items[5];
-    top_entry_t least_popular_items[5];
 
     for (int i = 0; i < 5; i++) {
         int max_index = i;
@@ -42,22 +38,22 @@ void calculate_top() {
         entries[i] = temp;
     }
 
-    
     for (int i = 0; i < 5; i++) {
-        most_popular_items[i] = entries[i];
-        least_popular_items[i] = entries[11 - i];
+        if (report_data.most_popular_items) {
+            report_data.most_popular_items[i] = entries[i];
+        }
+        if (report_data.least_popular_items) {
+            report_data.least_popular_items[i] = entries[11 - i];
+        }
     }
-
-    report_data.most_popular_items = most_popular_items;
-    report_data.least_popular_items = least_popular_items;
 
     sleep(1);
 
     printf("Самые популярные товары:\n");
-    print_entries(most_popular_items, stdout);
+    print_entries(report_data.most_popular_items, stdout);
 
     printf("Самые непопулярные товары:\n");
-    print_entries(least_popular_items, stdout);
+    print_entries(report_data.least_popular_items, stdout);
 }
 
 void* items_top_thread(void* arg) {
