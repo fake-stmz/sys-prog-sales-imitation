@@ -20,17 +20,26 @@ extern volatile int working;
 extern pthread_rwlock_t sales_rwlock;
 extern pthread_mutex_t read_mutex;
 extern pthread_mutex_t sum_mutex;
+extern pthread_mutex_t top_mutex;
 
 typedef struct {
     int sales_count;
     int sales_sum;
     int profit;
+    top_entry_t* most_popular_items;
+    top_entry_t* least_popular_items;
 } report_data_t;
 
 extern report_data_t report_data;
 
 extern item_t items[12];    
 extern customer_t customers[4];
+
+typedef struct {
+    item_t item;
+    int count;
+    int rank;
+} top_entry_t;
 
 void* read_sales_thread(void* arg);
 
