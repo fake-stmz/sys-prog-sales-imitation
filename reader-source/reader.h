@@ -26,6 +26,7 @@ extern pthread_mutex_t trendline_mutex;
 extern pthread_mutex_t report_mutex;
 
 typedef struct {
+    char* date;
     int sales_count;
     int sales_sum;
     int profit;
