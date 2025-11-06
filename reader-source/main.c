@@ -55,17 +55,17 @@ int main() {
     pthread_create(&rep_thread, NULL, report_thread, NULL);
 
     while (working) {
-        sleep(3);
+        sleep(1);
 
-        printf("Выберите действие:\n");
+        printf("\nВыберите действие:\n");
         printf("1 - Обновить данные\n");
         printf("2 - Вывести сумму продаж\n");
         printf("3 - Вывести популярные и непопулярные товары\n");
         printf("4 - Вывести активных покупателей\n");
         printf("5 - Вывести прогноз 3-х следующих продаж\n");
         printf("6 - Сгенерировать отчет\n");
-        printf("0 - выйти\n");
-        printf(">>>");
+        printf("0 - Выйти\n");
+        printf(">>> ");
         int choice;
         scanf("%d", &choice);
         
@@ -75,6 +75,7 @@ int main() {
             pthread_mutex_unlock(&sum_mutex);
         } else if (choice == 3) {
             pthread_mutex_unlock(&top_mutex);
+            sleep(1);
         } else if (choice == 4) {
             printf("Введите порог активности: ");
             scanf("%d", &treshold);
@@ -82,10 +83,11 @@ int main() {
         } else if (choice == 5) {
             pthread_mutex_unlock(&trendline_mutex);
         } else if (choice == 6) {
+            printf("\nВ отчет будут записаны следующие данные:\n");
             pthread_mutex_unlock(&sum_mutex);
             pthread_mutex_unlock(&top_mutex);
 
-            sleep(2);
+            sleep(1);
 
             pthread_mutex_unlock(&report_mutex);
         } else if (choice == 0) {
@@ -98,6 +100,13 @@ int main() {
             pthread_mutex_unlock(&report_mutex);
         }
     }
+
+    pthread_join(read_thread, NULL);
+    pthread_join(sum_thread, NULL);
+    pthread_join(top_thread, NULL);
+    pthread_join(customer_thread, NULL);
+    pthread_join(trend_thread, NULL);
+    pthread_join(rep_thread, NULL);
 
     return 0;
 }

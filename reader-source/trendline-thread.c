@@ -1,7 +1,6 @@
 #include "reader.h"
 
 float calculate_dot(int t_sum, int y_sum, int ty_sum, int t2_sum, int next_t) {
-    // convert to float
     float a = (float) (ty_sum - (t_sum * y_sum)) / (float) (t2_sum - (t_sum * t_sum));
     float b = (float) y_sum - a * (float) t_sum;
     return a * (float) next_t + b;
@@ -32,7 +31,7 @@ void calculate_trendline() {
 
 void* trendline_thread(void* arg) {
 
-    pthread_mutex_lock(&read_mutex);
+    pthread_mutex_lock(&trendline_mutex);
     
     while (working) {
         calculate_trendline();

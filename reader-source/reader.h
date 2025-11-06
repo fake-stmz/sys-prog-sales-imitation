@@ -20,10 +20,17 @@ extern volatile int working;
 extern pthread_rwlock_t sales_rwlock;
 extern pthread_mutex_t read_mutex;
 extern pthread_mutex_t sum_mutex;
+extern pthread_cond_t sum_cond;
 extern pthread_mutex_t top_mutex;
 extern pthread_mutex_t customers_mutex;
 extern pthread_mutex_t trendline_mutex;
 extern pthread_mutex_t report_mutex;
+
+typedef struct {
+    item_t item;
+    int count;
+    int rank;
+} top_entry_t;
 
 typedef struct {
     char* date;
@@ -38,12 +45,6 @@ extern report_data_t report_data;
 
 extern item_t items[12];    
 extern customer_t customers[4];
-
-typedef struct {
-    item_t item;
-    int count;
-    int rank;
-} top_entry_t;
 
 typedef struct {
     customer_t customer;

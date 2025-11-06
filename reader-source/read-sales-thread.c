@@ -31,24 +31,15 @@ void read_sales() {
         line[strcspn(line, "\n")] = 0;
         
         sale_t sale;
-        if (sscanf(line, "%d,%s,%d,%d,%d",
-                   &sale.sale_id, sale.date_time, &sale.customer_id,
-                   &sale.item_id, &sale.quantity) == 5) {
-            
-            if (count >= capacity) {
-                capacity *= 2;
-                sale_t* temp = (sale_t*)realloc(sales, capacity * sizeof(sale_t));
-                if (temp == NULL) {
-                    perror("Failed to reallocate memory");
-                    free(sales);
-                    fclose(sales_file);
-                    return;
-                }
+        sscanf(line, "%d,%[^,],%d,%d,%d", &sale.sale_id, sale.date_time, &sale.customer_id, &sale.item_id, &sale.quantity);
+        sales[count] = sale;
+        count++;
+        if (count == capacity) {
+            capacity *= 2;
+            sale_t* temp = (sale_t*)realloc(sales, capacity * sizeof(sale_t));
+            if (temp != NULL) {
                 sales = temp;
             }
-            
-            sales[count] = sale;
-            count++;
         }
     }
     

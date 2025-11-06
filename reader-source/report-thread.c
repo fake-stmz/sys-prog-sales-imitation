@@ -8,7 +8,7 @@ void print_report_to_file() {
     report_data.date = current_date;
 
     FILE* report = fopen(REPORT_FILE, "w");
-    fprintf(report, "=== Отчет по продажам (дата: %s) ===", report_data.date);
+    fprintf(report, "=== Отчет по продажам (дата: %s) ===\n\n", report_data.date);
     fprintf(report, "Количество продаж: %d\n\n", report_data.sales_count);
     fprintf(report, "Сумма продаж: %d\n\n", report_data.sales_sum);
     fprintf(report, "Прибыль: %d\n\n", report_data.profit);
@@ -17,16 +17,17 @@ void print_report_to_file() {
     fprintf(report, "\n");
     fprintf(report, "Наименее популярные товары:\n");
     print_entries(report_data.least_popular_items, report);
+    fprintf(report, "\n=== Конец отчета ===\n");
     fclose(report);
 }
 
 void* report_thread(void* arg) {
     
-    pthread_mutex_lock(&read_mutex);
+    pthread_mutex_lock(&report_mutex);
 
     while (working) {
         print_report_to_file();
-        pthread_mutex_lock(&read_mutex);
+        pthread_mutex_lock(&report_mutex);
     }
 
     return NULL;

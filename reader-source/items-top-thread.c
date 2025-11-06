@@ -42,6 +42,7 @@ void calculate_top() {
         entries[i] = temp;
     }
 
+    
     for (int i = 0; i < 5; i++) {
         most_popular_items[i] = entries[i];
         least_popular_items[i] = entries[11 - i];
@@ -49,6 +50,8 @@ void calculate_top() {
 
     report_data.most_popular_items = most_popular_items;
     report_data.least_popular_items = least_popular_items;
+
+    sleep(1);
 
     printf("Самые популярные товары:\n");
     print_entries(most_popular_items, stdout);
@@ -59,7 +62,7 @@ void calculate_top() {
 
 void* items_top_thread(void* arg) {
     
-    pthread_mutex_lock(&read_mutex);
+    pthread_mutex_lock(&top_mutex);
 
     while (working) {
         calculate_top();
