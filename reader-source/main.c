@@ -7,6 +7,7 @@ pthread_mutex_t read_mutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t sum_mutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t top_mutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t customers_mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t trendline_mutex = PTHREAD_MUTEX_INITIALIZER;
 report_data_t report_data;
 item_t items[12];
 customer_t customers[4];

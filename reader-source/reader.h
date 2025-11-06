@@ -22,6 +22,7 @@ extern pthread_mutex_t read_mutex;
 extern pthread_mutex_t sum_mutex;
 extern pthread_mutex_t top_mutex;
 extern pthread_mutex_t customers_mutex;
+extern pthread_mutex_t trendline_mutex;
 
 typedef struct {
     int sales_count;
