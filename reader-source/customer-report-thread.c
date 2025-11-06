@@ -31,6 +31,8 @@ void get_active_customers(int* treshold) {
 void* customer_report_thread(void* arg) {
     int* treshold = (int*)arg;
 
+    pthread_mutex_lock(&read_mutex);
+
     while (working) {
         get_active_customers(treshold);
         pthread_mutex_lock(&customers_mutex);

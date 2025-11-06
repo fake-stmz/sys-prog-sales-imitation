@@ -31,6 +31,8 @@ void calculate_trendline() {
 }
 
 void* trendline_thread(void* arg) {
+
+    pthread_mutex_lock(&read_mutex);
     
     while (working) {
         calculate_trendline();

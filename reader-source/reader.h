@@ -1,9 +1,7 @@
 #ifndef READER_H
 #define READER_H
 
-#ifndef _POSIX_C_SOURCE
 #define _POSIX_C_SOURCE 200112L
-#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,6 +12,8 @@
 #include <semaphore.h>
 #include "../structs/structs.h"
 
+#define REPORT_FILE "./data/report.txt"
+
 extern sale_t* sales;
 
 extern volatile int working;
@@ -23,6 +23,7 @@ extern pthread_mutex_t sum_mutex;
 extern pthread_mutex_t top_mutex;
 extern pthread_mutex_t customers_mutex;
 extern pthread_mutex_t trendline_mutex;
+extern pthread_mutex_t report_mutex;
 
 typedef struct {
     int sales_count;
@@ -53,6 +54,7 @@ void* read_sales_thread(void* arg);
 void* sales_sum_thread(void* arg);
 
 void* items_top_thread(void* arg);
+void print_entries(top_entry_t* entries, FILE* to);
 
 void* customer_report_thread(void* arg);
 

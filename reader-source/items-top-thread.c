@@ -9,9 +9,9 @@ void init_entries() {
     }
 }
 
-void print_entries(top_entry_t* entries) {
+void print_entries(top_entry_t* entries, FILE* to) {
     for (int i = 0; i < 5; i++) {
-        printf("%d. %s - %d\n", i + 1, entries[i].item.name, entries[i].count);
+        fprintf(to, "%d. %s - %d\n", i + 1, entries[i].item.name, entries[i].count);
     }
 }
 
@@ -51,14 +51,16 @@ void calculate_top() {
     report_data.least_popular_items = least_popular_items;
 
     printf("Самые популярные товары:\n");
-    print_entries(most_popular_items);
+    print_entries(most_popular_items, stdout);
 
     printf("Самые непопулярные товары:\n");
-    print_entries(least_popular_items);
+    print_entries(least_popular_items, stdout);
 }
 
 void* items_top_thread(void* arg) {
     
+    pthread_mutex_lock(&read_mutex);
+
     while (working) {
         calculate_top();
         pthread_mutex_lock(&top_mutex);
