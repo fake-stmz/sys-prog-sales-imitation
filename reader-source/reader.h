@@ -1,6 +1,10 @@
 #ifndef READER_H
 #define READER_H
 
+#ifndef _POSIX_C_SOURCE
+#define _POSIX_C_SOURCE 200112L
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,18 +14,11 @@
 #include <semaphore.h>
 #include "../structs/structs.h"
 
-typedef struct {
-    int sale_id;
-    char date_time[20];
-    int customer_id;
-    int item_id;
-    int quantity;
-} Sale;
+extern sale_t* sales;
 
-extern Sale* sales;
-
-extern int working;
-extern sem_t read_sem;
+extern volatile int working;
+extern pthread_rwlock_t sales_rwlock;
+extern pthread_mutex_t read_mutex;
 
 void* read_sales_thread(void* arg);
 

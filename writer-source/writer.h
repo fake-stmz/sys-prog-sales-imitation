@@ -10,12 +10,12 @@
 #include "../structs/structs.h"
 
 typedef struct {
-    Item* items;
-    Customer* customers;
-} WriterArgs;
+    item_t* items;
+    customer_t* customers;
+} writer_args_t;
 
-extern int writing_active;
-extern int next_sale_id;
+extern volatile int writing_active;
+extern volatile int next_sale_id;
 
 void* writer_thread(void* arg);
 

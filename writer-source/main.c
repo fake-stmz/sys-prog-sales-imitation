@@ -4,55 +4,16 @@
 #define CUSTOMERS_COUNT 4
 #define THREAD_COUNT 3
 
-int writing_active = 0;
-int next_sale_id = 1;
+volatile int writing_active = 0;
+volatile int next_sale_id = 1;
 pthread_mutex_t sale_mutex = PTHREAD_MUTEX_INITIALIZER;
 
-void read_data(Item* items, Customer* customers) {
-    FILE* items_file = fopen(ITEMS_FILE, "r");
-    FILE* customers_file = fopen(CUSTOMERS_FILE, "r");
-    if (!items_file || !customers_file) {
-        perror("Item or Customer file");
-        exit(1);
-    }
-
-    char line[256];
-    int index = 0;
-
-    fgets(line, sizeof(line), items_file);
-    fgets(line, sizeof(line), customers_file);
-
-    while (fgets(line, sizeof(line), items_file) && index < 12) {
-        char* token = strtok(line, ",");
-        items[index].id = atoi(token);
-        token = strtok(NULL, ",");
-        items[index].name = strdup(token);
-        token = strtok(NULL, ",");
-        items[index].price = atoi(token);
-        index++;
-    }
-    fclose(items_file);
-
-    index = 0;
-    while (fgets(line, sizeof(line), customers_file) && index < 4) {
-        char* token = strtok(line, ",");
-        customers[index].id = atoi(token);
-        token = strtok(NULL, ",");
-        token[strcspn(token, "\n")] = 0;
-        customers[index].name = strdup(token);
-        index++;
-    }
-    fclose(customers_file);
-}
-
 int main() {
-    Item items[ITEMS_COUNT];
-    Customer customers[CUSTOMERS_COUNT];
-    WriterArgs args = {items, customers};
-    read_data(items, customers);
-
-    printf("Начинается запись продаж...\n");
-    printf("Нажмите Enter для остановки записи.\n");
+    item_t items[ITEMS_COUNT];
+    customer_t customers[CUSTOMERS_COUNT];
+    writer_args_t args = {items, customers};
+    read_items(items);
+    read_customers(customers);
 
     writing_active = 1;
 
@@ -75,6 +36,9 @@ int main() {
     pthread_mutex_init(&sale_mutex, NULL);
 
     srand(time(NULL));
+
+    printf("Начинается запись продаж...\n");
+    printf("Нажмите Enter для остановки записи.\n");
 
     pthread_t threads[THREAD_COUNT];
     for (int i = 0; i < THREAD_COUNT; i++) {

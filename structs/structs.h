@@ -9,11 +9,23 @@ typedef struct {
     int id;
     char* name;
     double price;
-} Item;
+} item_t;
 
 typedef struct {
     int id;
     char* name;
-} Customer;
+} customer_t;
+
+typedef struct {
+    int sale_id;
+    char date_time[20];
+    int customer_id;
+    int item_id;
+    int quantity;
+} sale_t;
+
+void read_items(item_t* items);
+
+void read_customers(customer_t* customers);
 
 #endif

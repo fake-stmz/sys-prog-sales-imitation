@@ -1,29 +1,8 @@
 #include "reader.h"
 
-Sale* sales = NULL;
-int working = 1;
-sem_t read_sem;
+sale_t* sales = NULL;
+volatile int working = 1;
+pthread_rwlock_t sales_rwlock = PTHREAD_RWLOCK_INITIALIZER;
+pthread_mutex_t read_mutex = PTHREAD_MUTEX_INITIALIZER;
 
-int main() {
-    /* debug
-    sem_init(&read_sem, 0, 0);
-
-    pthread_t read_sales_thr;
-    pthread_create(&read_sales_thr, NULL, read_sales_thread, NULL);
-
-    sleep(5);
-    printf("%d\n", sales[0].sale_id);
-    sleep(3);
-
-    sem_post(&read_sem);
-    sleep(3);
-
-    working = 0;
-    sem_post(&read_sem);
-
-    pthread_join(read_sales_thr, NULL);
-
-    sem_destroy(&read_sem);
-    return 0;
-    */
-}
+int main() {}

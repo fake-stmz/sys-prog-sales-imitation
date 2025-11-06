@@ -1,9 +1,9 @@
 #include "writer.h"
 
 void* writer_thread(void* arg) {
-    WriterArgs* args = (WriterArgs*)arg;
-    Item* items = args->items;
-    Customer* customers = args->customers;
+    writer_args_t* args = (writer_args_t*)arg;
+    item_t* items = args->items;
+    customer_t* customers = args->customers;
     
     FILE* output_file = fopen(SALES_FILE, "a");
     while (writing_active) {
