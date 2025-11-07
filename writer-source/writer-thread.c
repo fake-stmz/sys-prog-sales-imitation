@@ -1,6 +1,7 @@
 #include "writer.h"
 
 void* writer_thread(void* arg) {
+    print_log("writer - writer_thread", "Начало работы.");
     writer_args_t* args = (writer_args_t*)arg;
     item_t* items = args->items;
     customer_t* customers = args->customers;
@@ -8,6 +9,7 @@ void* writer_thread(void* arg) {
     FILE* output_file = fopen(SALES_FILE, "a");
     while (writing_active) {
         pthread_mutex_lock(&sale_mutex);
+        print_log("writer - writer_thread", "Запись продажи...");
 
         int item_index = rand() % 12;
         int customer_index = rand() % 4;
@@ -36,6 +38,9 @@ void* writer_thread(void* arg) {
 
         pthread_mutex_unlock(&sale_mutex);
 
+        print_log("writer - writer_thread", "Продажа успешно записана.");
+
+        print_log("writer - writer_thread", "Ожидание...");
         int sleep_time = (rand() % 106) + 15;
         for (int i = 0; i < sleep_time && writing_active; i++) {
             if (!writing_active) {
@@ -45,5 +50,6 @@ void* writer_thread(void* arg) {
         }
     }
     fclose(output_file);
+    print_log("writer - writer_thread", "Завершение работы.");
     return NULL;
 }

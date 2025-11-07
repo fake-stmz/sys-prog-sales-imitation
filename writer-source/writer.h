@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <time.h>
 #include "../structs/structs.h"
+#include "../logging/logging.h"
 
 typedef struct {
     item_t* items;

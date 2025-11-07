@@ -11,6 +11,7 @@
 #include <time.h>
 #include <semaphore.h>
 #include "../structs/structs.h"
+#include "../logging/logging.h"
 
 #define REPORT_FILE "./data/report.txt"
 

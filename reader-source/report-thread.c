@@ -19,16 +19,21 @@ void print_report_to_file() {
     print_entries(report_data.least_popular_items, report);
     fprintf(report, "\n=== Конец отчета ===\n");
     fclose(report);
+
+    print_log("reader - report_thread", "Отчет успешно создан.");
 }
 
 void* report_thread(void* arg) {
+    print_log("reader - report_thread", "Начало работы.");
     
     pthread_mutex_lock(&report_mutex);
 
     while (working) {
+        print_log("reader - report_thread", "Создание отчета...");
         print_report_to_file();
         pthread_mutex_lock(&report_mutex);
     }
 
+    print_log("reader - report_thread", "Завершение работы.");
     return NULL;
 }
